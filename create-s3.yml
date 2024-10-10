@@ -1,0 +1,51 @@
+# json = no comments
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: A sample template
+
+Resources:
+              
+              WEBSITEBucket:
+                Type: 'AWS::S3::Bucket'
+                Properties:
+                  BucketName: website-87620
+                  PublicAccessBlockConfiguration:
+                    BlockPublicAcls: false
+                    BlockPublicPolicy: false
+                    IgnorePublicAcls: false
+                    RestrictPublicBuckets: false
+
+              MyBucketPolicy:
+                Type: 'AWS::S3::BucketPolicy'
+                Properties:
+                  Bucket:
+                    Ref: 'WEBSITEBucket'
+                  PolicyDocument:
+                    Version: '2012-10-17'
+                    Statement:
+                      - Effect: Allow
+                        Principal: '*'
+                        Action: 's3:GetObject'
+                        Resource:
+                          Fn::Join:
+                            - ''
+                            - - 'arn:aws:s3:::'
+                              - Ref: 'WEBSITEBucket'
+                              - '/*'
+              makeitwebsite:
+                Type: 'AWS::S3::Bucket'
+                Properties:
+                  AccessControl: PublicRead
+                  BucketName: ci-cd-87487
+                  MetricsConfigurations:
+                    - Id: EntireBucket
+                  WebsiteConfiguration:
+                    IndexDocument: index.html
+                    ErrorDocument: error.html
+                    RoutingRules:
+                      - RoutingRuleCondition:
+                          HttpErrorCodeReturnedEquals: '404'
+                          KeyPrefixEquals: out1/
+                DeletionPolicy: Retain
+                
+
