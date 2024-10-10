@@ -37,6 +37,7 @@ Changes not staged for commit:
         modified:   Readme.md
 
 # git commit: The git commit command captures a snapshot of the project's currently staged changes. Committed snapshots can be thought of as “safe” versions of a project—Git will never change them unless you explicitly ask it to.
+git commit -m "Meessage here"
 
 # PUBLISH CHANGES
 # GIT PUSH REMOTE-NICKNAME BRANCH-NAME
